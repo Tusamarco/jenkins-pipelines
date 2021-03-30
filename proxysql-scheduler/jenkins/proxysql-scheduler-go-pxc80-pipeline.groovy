@@ -39,7 +39,7 @@ pipeline {
         stage('Build Scheduler') {
             agent { label 'docker' }
             steps {
-                git branch: 'proxysql-scheduler-1', url: 'https://github.com/kamil-holubicki/jenkins-pipelines'
+                git branch: 'proxysql-scheduler-1', url: 'https://github.com/Tusamarco/jenkins-pipelines'
                 echo 'Checkout proxysql_scheduler sources'
                 sh '''
                     # sudo is needed for better node recovery after compilation failure
@@ -77,7 +77,7 @@ pipeline {
         stage('Test Scheduler') {
             agent { label 'docker-32gb' }
             steps {
-                git branch: 'proxysql-scheduler-1', url: 'https://github.com/kamil-holubicki/jenkins-pipelines'
+                git branch: 'proxysql-scheduler-1', url: 'https://github.com/Tusamarco/jenkins-pipelines'
                 echo 'Test proxysql_scheduler'
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'c42456e5-c28d-4962-b32c-b75d161bff27', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh '''
