@@ -26,7 +26,7 @@ pushd /tmp
     #apt update
     #apt install -y golang
 popd
-export GOPATH=${WORKDIR}
+export GOPATH=${WORKDIR}:${WORKDIR}/internal
 echo "GOPATH: $GOPATH"
 pushd ${WORKDIR}
     echo "Getting dependencies"
