@@ -28,7 +28,7 @@
     pipeline-scm:
       scm:
         - git:
-            url: https://github.com/kamil-holubicki/jenkins-pipelines.git
+            url: https://github.com/Tusamarco/jenkins-pipelines.git
             branches:
             - 'proxysql-scheduler-1'
             wipe-workspace: false
