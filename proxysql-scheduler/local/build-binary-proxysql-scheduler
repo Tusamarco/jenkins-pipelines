@@ -27,7 +27,7 @@ pushd /tmp
     #apt update
     #apt install -y golang
 popd
-export GOPATH=${WORKDIR}:${WORKDIR}/../internal
+#export GOPATH=${WORKDIR}:${WORKDIR}/../internal
 echo "GOPATH: $GOPATH"
 pushd ${WORKDIR}
     echo "Getting dependencies"
@@ -38,16 +38,16 @@ pushd ${WORKDIR}
     done < <(go list -f '{{ join .Imports "\n" }}')
 
     # todo: fix these dependencies to be able to get them automatically
-    go get -v github.com/Tusamarco/toml
-    go get -v golang.org/x/text/language
-    go get -v golang.org/x/text/message
-    go get -v github.com/golang/mock/gomock
-    go get -v github.com/stretchr/testify/assert
+   # go get -v github.com/Tusamarco/toml
+   # go get -v golang.org/x/text/language
+   # go get -v golang.org/x/text/message
+   # go get -v github.com/golang/mock/gomock
+   # go get -v github.com/stretchr/testify/assert
 
     go build -o pxc_scheduler_handler
 
     # run unit tests
-   # go test ./... -v |grep -v \?
+    go test ./... -v |grep -v \?
 
     ls -la
     tar --owner=0 --group=0 -czf proxysql-scheduler.tar.gz ./pxc_scheduler_handler ./mtr
