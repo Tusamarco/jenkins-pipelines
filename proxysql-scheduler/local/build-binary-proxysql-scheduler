@@ -49,5 +49,5 @@ pushd ${WORKDIR}
     go test ./... -v |grep -v \?
 
     ls -la
-    tar --owner=0 --group=0 -czf proxysql-scheduler.tar.gz ./proxysql-scheduler ./mtr
+    tar --owner=0 --group=0 -czf proxysql-scheduler.tar.gz ./pxc_scheduler_handler ./mtr
 popd
