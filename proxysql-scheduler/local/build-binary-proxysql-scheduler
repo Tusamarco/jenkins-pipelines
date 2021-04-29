@@ -43,7 +43,7 @@ pushd ${WORKDIR}
     go get -v github.com/golang/mock/gomock
     go get -v github.com/stretchr/testify/assert
 
-    go build
+    go build -o pxc_scheduler_handler
 
     # run unit tests
     go test ./... -v |grep -v \?
