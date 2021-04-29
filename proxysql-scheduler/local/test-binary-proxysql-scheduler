@@ -126,7 +126,7 @@ pushd ${WORKDIR_ABS}/PXC/mysql-test/suite
     ln -s ${WORKDIR_ABS}/PROXYSQL_SCHEDULER/mtr/proxysql
 popd
 
-export PROXYSQL_SCHEDULER_SCRIPT=${WORKDIR_ABS}/PROXYSQL_SCHEDULER/proxysql-scheduler
+export PROXYSQL_SCHEDULER_SCRIPT=${WORKDIR_ABS}/PROXYSQL_SCHEDULER/pxc_scheduler_handler
 export PROXYSQL_SCHEDULER_CONFIG_DIR=${WORKDIR_ABS}/PROXYSQL_SCHEDULER/mtr/proxysql/config
 
 # Running MTR test cases
