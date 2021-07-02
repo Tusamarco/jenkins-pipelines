@@ -58,7 +58,7 @@ sudo /usr/bin/proxysql
 # sudo apt install -y lsb-release
 # pushd /tmp
 #     sudo wget -O - 'https://repo.proxysql.com/ProxySQL/repo_pub_key' | sudo apt-key add -
-#     sudo echo deb https://repo.proxysql.com/ProxySQL/proxysql-2.1.x/$(lsb_release -sc)/ ./ \ | sudo tee /etc/apt/sources.list.d/proxysql.list
+#     sudo echo deb https://repo.proxysql.com/ProxySQL/proxysql-2.2.x/$(lsb_release -sc)/ ./ \ | sudo tee /etc/apt/sources.list.d/proxysql.list
 # popd
 # sudo apt update
 # sudo apt install -y proxysql
@@ -119,7 +119,7 @@ status=0
 rm -fr ${WORKDIR_ABS}/PROXYSQL_SCHEDULER
 mkdir -p ${WORKDIR_ABS}/PROXYSQL_SCHEDULER
 
-tar -C ${WORKDIR_ABS}/PROXYSQL_SCHEDULER --strip-components=1 -zxpf ${WORKDIR_ABS}/proxysql-scheduler.tar.gz
+tar -C ${WORKDIR_ABS}/PROXYSQL_SCHEDULER --strip-components=1 -zxpf ${WORKDIR_ABS}/pxc_scheduler_handler.tar.gz
 
 # link proxysql mtr suite into pxc mtr
 pushd ${WORKDIR_ABS}/PXC/mysql-test/suite

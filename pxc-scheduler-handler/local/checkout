@@ -14,13 +14,13 @@ if [ ! -d "${ROOT_DIR}" ]; then
     mkdir -p ${ROOT_DIR}
 fi
 
-# ==================== proxysql_scheduler ====================
+# ==================== pxc_scheduler_handler ====================
 
-SCHEDULER_ROOT_DIR="${ROOT_DIR}/proxysql_scheduler"
+SCHEDULER_ROOT_DIR="${ROOT_DIR}/pxc_scheduler_handler"
 
 sudo rm -rf ${SCHEDULER_ROOT_DIR}
 
-git clone "${GIT_REPO:-https://github.com/Tusamarco/proxysql_scheduler}" "${SCHEDULER_ROOT_DIR}"
+git clone "${GIT_REPO:-https://github.com/Tusamarco/pxc_scheduler_handler}" "${SCHEDULER_ROOT_DIR}"
 
 pushd $SCHEDULER_ROOT_DIR
     if [ -n "${GIT_REPO}" ]; then

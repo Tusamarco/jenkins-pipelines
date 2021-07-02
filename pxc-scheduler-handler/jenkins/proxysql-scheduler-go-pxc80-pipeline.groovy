@@ -4,7 +4,7 @@ pipeline {
     parameters {
         string(
             name: 'GIT_REPO',
-            defaultValue: 'https://github.com/Tusamarco/proxysql_scheduler',
+            defaultValue: 'https://github.com/Tusamarco/pxc_scheduler_handler',
             description: 'URL to the scheduler repository',
             trim: true)
         string(
@@ -14,7 +14,7 @@ pipeline {
             trim: true)
         string(
             name: 'PXC_TARBALL',
-            defaultValue: 'https://downloads.percona.com/downloads/TESTING/pxc-8.0.22-13.1/Percona-XtraDB-Cluster_8.0.22-13.1_Linux.x86_64.glibc2.17.tar.gz',
+            defaultValue: 'https://downloads.percona.com/downloads/Percona-XtraDB-Cluster-LATEST/Percona-XtraDB-Cluster-8.0.23/binary/tarball/Percona-XtraDB-Cluster_8.0.23-14.1_Linux.x86_64.glibc2.17.tar.gz',
             description: 'PXC tarball including mtr to be used for testing',
             trim: true)
         string(
@@ -39,7 +39,7 @@ pipeline {
         stage('Build Scheduler') {
             agent { label 'docker' }
             steps {
-                git branch: 'proxysql-scheduler-1', url: 'https://github.com/Tusamarco/jenkins-pipelines'
+                git branch: 'pxc-scheduler-handler-1', url: 'https://github.com/Tusamarco/jenkins-pipelines'
                 echo 'Checkout proxysql_scheduler sources'
                 sh '''
                     # sudo is needed for better node recovery after compilation failure
@@ -47,7 +47,7 @@ pipeline {
                     sudo git reset --hard
                     sudo git clean -xdf
                     sudo rm -rf sources
-                    ./proxysql-scheduler/local/checkout
+                    ./ pxc-scheduler-handler/local/checkout
                 '''
 
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'c42456e5-c28d-4962-b32c-b75d161bff27', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
@@ -58,11 +58,11 @@ pipeline {
                             if [ \$(docker ps -q | wc -l) -ne 0 ]; then
                                 docker ps -q | xargs docker stop --time 1 || :
                             fi
-                            ./proxysql-scheduler/docker/run-build ubuntu:focal
+                            ./pxc-scheduler-handler/docker/run-build ubuntu:focal
                         " 2>&1 | tee build.log
 
-                        if [[ -f \$(ls proxysql-scheduler/sources/proxysql_scheduler/results/*.tar.gz | head -1) ]]; then
-                            until aws s3 cp --no-progress --acl public-read proxysql-scheduler/sources/proxysql_scheduler/results/*.tar.gz s3://proxysql-scheduler-build-cache/${BUILD_TAG}/proxysql-scheduler.tar.gz; do
+                        if [[ -f \$(ls pxc-scheduler-handler/sources/proxysql_scheduler/results/*.tar.gz | head -1) ]]; then
+                            until aws s3 cp --no-progress --acl public-read pxc-scheduler-handler/sources/proxysql_scheduler/results/*.tar.gz s3://proxysql-scheduler-build-cache/${BUILD_TAG}/proxysql-scheduler.tar.gz; do
                                 sleep 5
                             done
                         else
@@ -77,11 +77,11 @@ pipeline {
         stage('Test Scheduler') {
             agent { label 'docker-32gb' }
             steps {
-                git branch: 'proxysql-scheduler-1', url: 'https://github.com/Tusamarco/jenkins-pipelines'
+                git branch: 'pxc-scheduler-handler-1', url: 'https://github.com/Tusamarco/jenkins-pipelines'
                 echo 'Test proxysql_scheduler'
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'c42456e5-c28d-4962-b32c-b75d161bff27', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh '''
-                        until aws s3 cp --no-progress s3://proxysql-scheduler-build-cache/${BUILD_TAG}/proxysql-scheduler.tar.gz ./proxysql-scheduler/sources/proxysql_scheduler/results/proxysql-scheduler.tar.gz; do
+                        until aws s3 cp --no-progress s3://proxysql-scheduler-build-cache/${BUILD_TAG}/proxysql-scheduler.tar.gz ./pxc-scheduler-handler/sources/proxysql_scheduler/results/pxc-scheduler-handler.tar.gz; do
                             sleep 5
                         done
 
@@ -90,12 +90,12 @@ pipeline {
                             if [ \$(docker ps -q | wc -l) -ne 0 ]; then
                                 docker ps -q | xargs docker stop --time 1 || :
                             fi
-                            ./proxysql-scheduler/docker/run-test ubuntu:focal
+                            ./pxc-scheduler-handler/docker/run-test ubuntu:focal
                         "
                     '''
                 }
-                step([$class: 'JUnitResultArchiver', testResults: 'proxysql-scheduler/sources/proxysql_scheduler/results/*.xml', healthScaleFactor: 1.0])
-                archiveArtifacts 'proxysql-scheduler/sources/proxysql-scheduler/results/*.xml,proxysql-scheduler/sources/proxysql_scheduler/results/proxysql-scheduler-test-mtr_logs.tar.gz'
+                step([$class: 'JUnitResultArchiver', testResults: 'pxc-scheduler-handler/sources/pxc_scheduler_handler/results/*.xml', healthScaleFactor: 1.0])
+                archiveArtifacts 'pxc-scheduler-handler/sources/pxc-scheduler-handler/results/*.xml,pxc-scheduler-handler/sources/pxc_scheduler_handler/results/pxc-scheduler-handler-test-mtr_logs.tar.gz'
             }
         }
     }
