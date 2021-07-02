@@ -9,9 +9,11 @@ set -o xtrace
 
 
 ROOT_DIR=$(cd $(dirname $0)/..; pwd -P)/sources
+echo "[debug] ROOT_DIR $ROOT_DIR"
 
 if [ ! -d "${ROOT_DIR}" ]; then
     mkdir -p ${ROOT_DIR}
+    echo "[debug] create $ROOT_DIR"
 fi
 
 # ==================== pxc_scheduler_handler ====================
@@ -32,6 +34,8 @@ pushd $SCHEDULER_ROOT_DIR
     git clean -xdf
 
     mkdir ./target
+
+    echo "[debug] Branch $BRANCH"
 
     if [ -n "${BRANCH}" ]; then
         git checkout "${BRANCH}"

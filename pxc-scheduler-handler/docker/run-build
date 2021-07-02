@@ -17,7 +17,9 @@ docker run --rm \
     sh -c "
     set -o errexit
     set -o xtrace
+
     sudo bash -x /tmp/scripts/build-binary-pxc-scheduler-handler /tmp/pxc-scheduler-handler /tmp/pxc-scheduler-handler
+    
     sudo rm -rf /tmp/pxc-scheduler-handler/results
     sudo mkdir /tmp/pxc-scheduler-handler/results
     sudo mv /tmp/pxc-scheduler-handler/*.tar.gz /tmp/pxc-scheduler-handler/results/
