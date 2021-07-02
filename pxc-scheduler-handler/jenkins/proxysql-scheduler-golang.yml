@@ -33,4 +33,4 @@
             - 'pxc-scheduler-handler-1'
             wipe-workspace: false
       lightweight-checkout: true
-      script-path: pxc-scheduler-handler/jenkins/pxc-scheduler-handler-pxc80-pipeline.groovy.groovy
+      script-path: pxc-scheduler-handler/jenkins/pxc-scheduler-handler-pxc80-pipeline.groovy
