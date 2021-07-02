@@ -60,9 +60,8 @@ pipeline {
                             fi
                             ./pxc-scheduler-handler/docker/run-build ubuntu:focal
                         " 2>&1 | tee build.log
-
                         if [[ -f \$(ls pxc-scheduler-handler/sources/pxc_scheduler_handler/results/*.tar.gz | head -1) ]]; then
-                            until aws s3 cp --no-progress --acl public-read pxc-scheduler-handler/sources/pxc_scheduler_handler/results/*.tar.gz s3://proxysql-scheduler-build-cache/${BUILD_TAG}/proxysql-scheduler.tar.gz; do
+                            until aws s3 cp --no-progress --acl public-read pxc-scheduler-handler/sources/pxc_scheduler_handler/results/*.tar.gz s3://proxysql-scheduler-build-cache/${BUILD_TAG}/pxc_scheduler_handler.tar.gz; do
                                 sleep 5
                             done
                         else
@@ -81,10 +80,9 @@ pipeline {
                 echo 'Test pxc_scheduler_handler'
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'c42456e5-c28d-4962-b32c-b75d161bff27', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                     sh '''
-                        until aws s3 cp --no-progress s3://proxysql-scheduler-build-cache/${BUILD_TAG}/proxysql-scheduler.tar.gz ./pxc-scheduler-handler/sources/pxc_scheduler_handler/results/pxc-scheduler-handler.tar.gz; do
+                        until aws s3 cp --no-progress s3://proxysql-scheduler-build-cache/${BUILD_TAG}/pxc_scheduler_handler.tar.gz ./pxc-scheduler-handler/sources/pxc_scheduler_handler/results/pxc_scheduler_handler.tar.gz; do
                             sleep 5
                         done
-
                         aws ecr-public get-login-password --region us-east-1 | docker login -u AWS --password-stdin public.ecr.aws/e7j3v3n0
                         sg docker -c "
                             if [ \$(docker ps -q | wc -l) -ne 0 ]; then
