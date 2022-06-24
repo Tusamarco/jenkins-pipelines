@@ -14,7 +14,7 @@ pipeline {
             trim: true)
         string(
             name: 'PXC_TARBALL',
-            defaultValue: 'https://downloads.percona.com/downloads/Percona-XtraDB-Cluster-LATEST/Percona-XtraDB-Cluster-8.0.27/binary/tarball/Percona-XtraDB-Cluster_8.0.27-18.1_Linux.x86_64.glibc2.17.tar.gz'
+            defaultValue: 'https://downloads.percona.com/downloads/Percona-XtraDB-Cluster-LATEST/Percona-XtraDB-Cluster-8.0.27/binary/tarball/Percona-XtraDB-Cluster_8.0.27-18.1_Linux.x86_64.glibc2.17.tar.gz',
             description: 'PXC tarball including mtr to be used for testing',
             trim: true)
         string(
