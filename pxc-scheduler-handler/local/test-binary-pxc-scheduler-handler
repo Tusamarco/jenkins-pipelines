@@ -50,7 +50,15 @@ sudo percona-release enable tools experimental
 sudo apt update
 
 sudo apt install -y proxysql23
+
+echo "#####################"
+echo "# ProxySQL version"
+echo "#####################"
+sudo /usr/bin/proxysql --version
+sleep 1
 sudo /usr/bin/proxysql
+
+
 
 # ProxySQL upstream package
 #
