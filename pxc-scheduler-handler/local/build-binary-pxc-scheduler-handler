@@ -46,6 +46,9 @@ pushd ${WORKDIR}
 
     go build -o pxc_scheduler_handler
 
+   # Printout the version
+   ./pxc_scheduler_handler --version
+   
     # run unit tests
     go test ./... -v |grep -v \?
 
