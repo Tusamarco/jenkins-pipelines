@@ -49,7 +49,7 @@ popd
 sudo percona-release enable tools experimental
 sudo apt update
 
-sudo apt install -y proxysql21
+sudo apt install -y proxysql23
 sudo /usr/bin/proxysql
 
 # ProxySQL upstream package
