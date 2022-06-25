@@ -15,6 +15,7 @@ set -o xtrace
 #mkdir -p ${1:-./build}
 WORKDIR=$(cd ${1:-./build}; pwd -P)
 INSTALL_DIR=${WORKDIR}/DESTDIR
+GO_PACKAGE=go1.17.11.linux-amd64.tar.gz
 SOURCEDIR=$(cd ${2:-$(dirname $0)/../sources/pxc_scheduler_handler}; pwd -P)
 echo $SOURCEDIR
 pushd /tmp
