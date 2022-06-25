@@ -27,7 +27,7 @@ pipeline {
             description: 'Run each test N number of times, --repeat=N')
         string(
 	        name: 'PROXYSQL_VERSION',
-    	    default: 'proxysql2',
+    	    defaultValue: 'proxysql2',
         	description: 'ProxySQL Major Version to use for the test')
         string(
             name: 'GO_PACKAGE',
