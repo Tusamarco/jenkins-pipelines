@@ -18,12 +18,12 @@ INSTALL_DIR=${WORKDIR}/DESTDIR
 SOURCEDIR=$(cd ${2:-$(dirname $0)/../sources/pxc_scheduler_handler}; pwd -P)
 echo $SOURCEDIR
 pushd /tmp
-    sudo wget -q https://go.dev/dl/go1.17.11.linux-amd64.tar.gz
+    sudo wget -q https://go.dev/dl/${GO_PACKAGE}
     #sudo wget -q https://golang.org/dl/go1.15.8.linux-amd64.tar.gz
-    sudo tar -C /usr/local -xzf go1.17.11.linux-amd64.tar.gz
+    sudo tar -C /usr/local -xzf ${GO_PACKAGE}
     export PATH=$PATH:/usr/local/go/bin
     sudo /usr/local/go/bin/go version
-    sudo rm go1.17.11.linux-amd64.tar.gz
+    sudo rm ${GO_PACKAGE}
     #apt update
     #apt install -y golang
 popd
@@ -44,6 +44,7 @@ pushd ${WORKDIR}
    # go get -v github.com/golang/mock/gomock
    # go get -v github.com/stretchr/testify/assert
 	go mod tidy
+	go get -u golang.org/x/sys
 
     go build -o pxc_scheduler_handler
 
