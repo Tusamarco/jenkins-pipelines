@@ -23,8 +23,16 @@ pipeline {
             description: 'mysql-test-run.pl options, for options like: --big-test --only-big-test --nounit-tests --unit-tests-report')
         string(
             name: 'MTR_REPEAT',
-            defaultValue: '1',
+            defaultValue: '2',
             description: 'Run each test N number of times, --repeat=N')
+        string(
+	        name: 'PROXYSQL_VERSION',
+    	    default: 'proxysql2',
+        	description: 'ProxySQL Major Version to use for the test')
+        string(
+            name: 'GO_PACKAGE',
+            defaultValue: 'go1.17.11.linux-amd64.tar.gz',
+            description: 'GO Version to use as package IE go1.17.11.linux-amd64.tar.gz')
     }
     agent {
         label 'micro-amazon'
