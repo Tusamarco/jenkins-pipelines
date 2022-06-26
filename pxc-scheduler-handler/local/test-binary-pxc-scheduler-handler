@@ -15,7 +15,7 @@ function process_mtr_output {
   local TESTSUITE=${1}
   local INFILE=${2}
   local OUTFILE=${3}
-  local PROXYSQL_VERSION=proxysql2
+
   egrep -a -o '[[:alpha:]]+(_[[:alnum:]]+)?(\.\/)?.*\[ .* \].*$' ${INFILE} | sort |
     gawk 'BEGIN { print "<testsuite name=\"@@TESTSUITE@@\" tests=\"@@PASSED@@\" failures=\"@@FAILURES@@\" disabled=\"@@DISABLED@@\" skipped=\"@@SKIPPED@@\">" }
   /\[.*pass \]/ { printf "\t<testcase name=\"%s\" time=\"%.3f\"></testcase>\n", $1, $NF/1000.0 }
@@ -50,7 +50,7 @@ popd
 sudo percona-release enable tools experimental
 sudo apt update
 
-sudo apt install -y ${PROXYSQL_VERSION}
+sudo apt install -y proxysql2
 
 echo "#####################"
 echo "# ProxySQL version"
